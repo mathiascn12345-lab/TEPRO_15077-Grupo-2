@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JTextArea;
@@ -123,6 +124,7 @@ public class window extends JFrame implements ActionListener {
 		}
 		{
 			btnBuscar = new JButton("Buscar");
+			btnBuscar.addActionListener(this);
 			btnBuscar.setBounds(464, 92, 84, 34);
 			contentPane.add(btnBuscar);
 		}
@@ -141,6 +143,9 @@ public class window extends JFrame implements ActionListener {
 
 	}
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnBuscar) {
+			do_btnBuscar_actionPerformed(e);
+		}
 		if (e.getSource() == btnListar) {
 			do_btnListar_actionPerformed(e);
 		}
@@ -154,7 +159,8 @@ public class window extends JFrame implements ActionListener {
 	Arregoproductos ap=new Arregoproductos();
 	private JComboBox comboBox;
 	
-	protected void do_btnModificar_actionPerformed(ActionEvent e) {
+	protected void do_btnModificar_actionPerformed(ActionEvent e) {//Metodo Modificar
+		
 	}
 	protected void do_btnNewButton_actionPerformed(ActionEvent e) //método adicionar 
 	{
@@ -162,12 +168,28 @@ public class window extends JFrame implements ActionListener {
 		
 		Producto pro = new Producto(cod, txtnom.getText(), comboBox.getSelectedItem().toString(), Double.parseDouble(txtpre.getText()), Integer.parseInt(txtcant.getText()));
 		ap.adicionar(pro);
+		txtcant.setText("");
+		txtpre.setText("");
+		txtnom.setText("");
 	}
 	protected void do_btnListar_actionPerformed(ActionEvent e) {
 		txtarea.setText("");
 		txtarea.append("Código\tNombre\tCategoría\tPrecio\tStock");
 		for(int i=0; i<ap.Tamaño();i++) {
-			txtarea.append("\n"+ap.Obtener(i).getCodigo()+"\t"+ap.Obtener(i).getNombre()+"\t"+ap.Obtener(i).getCategoria()+"\t"+ap.Obtener(i).getPrecio()+"\t"+ap.Obtener(i).getStock());
+			txtarea.append("\n"+ap.Obtener(i).getCodigo()+"\t"+ap.Obtener(i).getNombre()+"\t\t"+ap.Obtener(i).getCategoria()+"\t"+ap.Obtener(i).getPrecio()+"\t"+ap.Obtener(i).getStock());
 		}
+	}
+	protected void do_btnBuscar_actionPerformed(ActionEvent e) {
+		String Nom = txtnom.getText();
+		Producto P = ap.Buscar(Nom);
+		if (P != null) {
+			JOptionPane.showMessageDialog(this,
+					"Codigo: "+P.getCodigo()+"\n"+
+					"Nombre: "+P.getNombre()+"\n"+
+					"Categoría: "+P.getCategoria()+"\n"+
+					"Precio: "+P.getPrecio()+"\n"+
+					"Stock: "+P.getStock());
+		}
+		else JOptionPane.showInputDialog(this, "Producto no encontrado");
 	}
 }
