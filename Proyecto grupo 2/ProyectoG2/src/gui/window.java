@@ -18,199 +18,178 @@ import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.Font;
 
+
 public class window extends JFrame implements ActionListener {
 
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-	private JLabel lblNewLabel;
-	private JTextField txtnom;
-	private JLabel lblCategora;
-	private JTextField txtcant;
-	private JComboBox cmbox;
-	private JLabel lblCantidad;
-	private JTextArea txtarea;
-	private JButton btnNewButton;
-	private JLabel lblPrecio;
-	private JTextField txtpre;
-	private JButton btnListar;
-	private JButton btnEliminar;
-	private JButton btnBuscar;
-	private JButton btnModificar;
+	private JTextField txtnom, txtcant, txtpre, txtNuevoNombre;
+    private JTextArea txtarea;
+    private JComboBox<String> comboBox;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					window frame = new window();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+    private JButton btnAdicionar, btnListar, btnEliminar, btnBuscar, btnModificar;
 
-	/**
-	 * Create the frame.
-	 */
-	public window() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 631, 385);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		{
-			lblNewLabel = new JLabel("Nombre del producto:");
-			lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 10));
-			lblNewLabel.setBounds(108, 11, 109, 12);
-			contentPane.add(lblNewLabel);
-		}
-		{
-			txtnom = new JTextField();
-			txtnom.setBounds(108, 33, 109, 18);
-			contentPane.add(txtnom);
-			txtnom.setColumns(10);
-		}
-		{
-			lblCategora = new JLabel("Categoría");
-			lblCategora.setBounds(11, 11, 59, 12);
-			contentPane.add(lblCategora);
-		}
-		{
-			txtcant = new JTextField();
-			txtcant.setColumns(10);
-			txtcant.setBounds(227, 33, 96, 18);
-			contentPane.add(txtcant);
-		}
-		{
-			lblCantidad = new JLabel("Stock:");
-			lblCantidad.setBounds(227, 11, 59, 12);
-			contentPane.add(lblCantidad);
-		}
-		{
-			txtarea = new JTextArea();
-			txtarea.setBounds(10, 60, 501, 278);
-			contentPane.add(txtarea);
-		}
-		{
-			btnNewButton = new JButton("Adicionar");
-			btnNewButton.addActionListener(this);
-			btnNewButton.setBounds(521, 60, 84, 34);
-			contentPane.add(btnNewButton);
-		}
-		{
-			lblPrecio = new JLabel("Precio:");
-			lblPrecio.setBounds(333, 11, 59, 12);
-			contentPane.add(lblPrecio);
-		}
-		{
-			txtpre = new JTextField();
-			txtpre.setColumns(10);
-			txtpre.setBounds(333, 33, 96, 18);
-			contentPane.add(txtpre);
-		}
-		{
-			btnListar = new JButton("Reportar");
-			btnListar.addActionListener(this);
-			btnListar.setBounds(521, 195, 84, 34);
-			contentPane.add(btnListar);
-		}
-		{
-			btnEliminar = new JButton("Eliminar");
-			btnEliminar.setBounds(521, 240, 84, 34);
-			contentPane.add(btnEliminar);
-		}
-		{
-			btnBuscar = new JButton("Buscar");
-			btnBuscar.addActionListener(this);
-			btnBuscar.setBounds(521, 105, 84, 34);
-			contentPane.add(btnBuscar);
-		}
-		{
-			btnModificar = new JButton("Modificar");
-			btnModificar.addActionListener(this);
-			btnModificar.setBounds(521, 150, 84, 34);
-			contentPane.add(btnModificar);
-		}
-		{
-			comboBox = new JComboBox();
-			comboBox.setModel(new DefaultComboBoxModel(new String[] {"Bebidas", "Snacks", "Helados", "Higiene"}));
-			comboBox.setBounds(10, 32, 84, 20);
-			contentPane.add(comboBox);
-		}
-		{
-			txtNuevoNombre = new JTextField();
-			txtNuevoNombre.setColumns(10);
-			txtNuevoNombre.setBounds(439, 33, 109, 18);
-			contentPane.add(txtNuevoNombre);
-		}
-		{
-			lblNuevoNombre = new JLabel("Nuevo nombre producto:");
-			lblNuevoNombre.setFont(new Font("Tahoma", Font.PLAIN, 9));
-			lblNuevoNombre.setBounds(439, 11, 109, 12);
-			contentPane.add(lblNuevoNombre);
-		}
+    Arregoproductos ap = new Arregoproductos();
 
-	}
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == btnBuscar) {
-			do_btnBuscar_actionPerformed(e);
-		}
-		if (e.getSource() == btnListar) {
-			do_btnListar_actionPerformed(e);
-		}
-		if (e.getSource() == btnNewButton) {
-			do_btnNewButton_actionPerformed(e);
-		}
-		if (e.getSource() == btnModificar) {
-			do_btnModificar_actionPerformed(e);
-		}
-	}
-	Arregoproductos ap=new Arregoproductos();
-	private JComboBox comboBox;
-	private JTextField txtNuevoNombre;
-	private JLabel lblNuevoNombre;
-	
-	protected void do_btnModificar_actionPerformed(ActionEvent e) {//Metodo Modificar
-		boolean  modifica = ap.Modificar(txtnom.getText(), txtNuevoNombre.getText(), comboBox.getSelectedItem().toString(),Double.parseDouble(txtpre.getText()) ,Integer.parseInt(txtcant.getText()));
-		if (modifica) {
-	        JOptionPane.showMessageDialog(this, "Producto modificado correctamente");
-	    } else {
-	        JOptionPane.showMessageDialog(this, "Producto no encontrado");
-	    }
-	}
-	protected void do_btnNewButton_actionPerformed(ActionEvent e) //método adicionar 
-	{
-		String cod = ap.GenerarCod();
-		
-		Producto pro = new Producto(cod, txtnom.getText(), comboBox.getSelectedItem().toString(), Double.parseDouble(txtpre.getText()), Integer.parseInt(txtcant.getText()));
-		ap.adicionar(pro);
-		txtcant.setText("");
-		txtpre.setText("");
-		txtnom.setText("");
-	}
-	protected void do_btnListar_actionPerformed(ActionEvent e) {
-		txtarea.setText("");
-		txtarea.append("CÓDIGO\tNOMBRE\t\tCATEGORÍA\tPRECIO\tSTOCK");
-		for(int i=0; i<ap.Tamaño();i++) {
+    public static void main(String[] args) {
+        new window().setVisible(true);
+    }
 
-			
+    public window() {
+        setTitle("Gestión de Productos");
+        setSize(650, 400);
+        getContentPane().setLayout(null);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        txtnom = new JTextField();
+        txtnom.setBounds(140, 31, 100, 20);
+        getContentPane().add(txtnom);
+        comboBox = new JComboBox<>(new String[]{"Bebidas", "Snacks", "Helados", "Higiene"});
+        comboBox.setBounds(20, 30, 100, 20);
+        getContentPane().add(comboBox);
+        txtcant = new JTextField();
+        txtcant.setBounds(260, 30, 80, 20);
+        getContentPane().add(txtcant);
+        txtpre = new JTextField();
+        txtpre.setBounds(360, 30, 80, 20);
+        getContentPane().add(txtpre);
+        txtNuevoNombre = new JTextField();
+        txtNuevoNombre.setBounds(460, 30, 120, 20);
+        getContentPane().add(txtNuevoNombre);
 
-			txtarea.append("\n"+ap.Obtener(i).getCodigo()+"\t"+ap.Obtener(i).getNombre()+"\t"+ap.Obtener(i).getCategoria()+
-		    "\t"+ap.Obtener(i).getPrecio()+"\t"+ap.Obtener(i).getStock());
+        txtarea = new JTextArea();
+        txtarea.setBounds(20, 70, 450, 250);
+        getContentPane().add(txtarea);
 
-		}
-	}
-	protected void do_btnBuscar_actionPerformed(ActionEvent e) { // Busca
-		String Nom = txtnom.getText();
-		Producto P = ap.Buscar(Nom);
-		if (P != null) {
-			JOptionPane.showMessageDialog(this,"Codigo: "+P.getCodigo()+"\n"+"Nombre: "+P.getNombre()+"\n"+"Categoría: "+P.getCategoria()+"\n"+"Precio: "+P.getPrecio()+"\n"+"Stock: "+P.getStock());
-		}
-		else JOptionPane.showInputDialog(this, "Producto no encontrado");
-	}
+        btnAdicionar = new JButton("Adicionar");
+        btnAdicionar.setBounds(500, 70, 120, 30);
+        getContentPane().add(btnAdicionar);
+
+        btnBuscar = new JButton("Buscar");
+        btnBuscar.setBounds(500, 110, 120, 30);
+        getContentPane().add(btnBuscar);
+
+        btnModificar = new JButton("Modificar");
+        btnModificar.setBounds(500, 150, 120, 30);
+        getContentPane().add(btnModificar);
+
+        btnListar = new JButton("Listar");
+        btnListar.setBounds(500, 190, 120, 30);
+        getContentPane().add(btnListar);
+
+        btnEliminar = new JButton("Eliminar");
+        btnEliminar.setBounds(500, 230, 120, 30);
+        getContentPane().add(btnEliminar);
+        
+        JLabel lblCategoria = new JLabel("Categoría:");
+        lblCategoria.setBounds(20, 10, 80, 20);
+        getContentPane().add(lblCategoria);
+        
+        JLabel lblNombre = new JLabel("Nombre:");
+        lblNombre.setBounds(137, 14, 65, 16);
+        getContentPane().add(lblNombre);
+        
+        JLabel lblStock = new JLabel("Stock:");
+        lblStock.setBounds(261, 14, 79, 16);
+        getContentPane().add(lblStock);
+        
+        JLabel lblPrecio = new JLabel("Precio:");
+        lblPrecio.setBounds(367, 14, 73, 16);
+        getContentPane().add(lblPrecio);
+        
+        JLabel lblNuevoNombre = new JLabel("Nuevo Nombre:");
+        lblNuevoNombre.setBounds(460, 12, 91, 16);
+        getContentPane().add(lblNuevoNombre);
+
+        btnAdicionar.addActionListener(this);
+        btnBuscar.addActionListener(this);
+        btnModificar.addActionListener(this);
+        btnListar.addActionListener(this);
+        btnEliminar.addActionListener(this);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+    	
+        try {
+            if (e.getSource() == btnAdicionar) {
+
+                if (txtnom.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Ingrese nombre");
+                    return;
+                }
+
+                if(Double.parseDouble(txtpre.getText())>=1)
+                {double precio = Double.parseDouble(txtpre.getText());
+                 int stock = Integer.parseInt(txtcant.getText());
+                ap.adicionar(txtnom.getText(),
+                        comboBox.getSelectedItem().toString(),
+                        precio, stock);
+
+                JOptionPane.showMessageDialog(this, "Producto agregado");}
+                else if (Double.parseDouble(txtpre.getText())<=0) 
+                {JOptionPane.showMessageDialog(this, "El precio debe ser mayor a 0, ni modo que sea gratis o te endeudes");}
+                int stock = Integer.parseInt(txtcant.getText());
+
+                
+
+            } else if (e.getSource() == btnListar) {
+
+                txtarea.setText("CODIGO\tNOMBRE\tCATEGORIA\tPRECIO\tSTOCK\n");
+
+                for (int i = 0; i < ap.Tamaño(); i++) {
+                    Producto p = ap.Obtener(i);
+                    txtarea.append(p.getCodigo() + "\t" +
+                            p.getNombre() + "\t" +
+                            p.getCategoria() + "\t" +
+                            p.getPrecio() + "\t" +
+                            p.getStock() + "\n");
+                }
+
+            } else if (e.getSource() == btnBuscar) {
+
+                Producto p = ap.Buscar(txtnom.getText());
+
+                if (p != null) {
+                    JOptionPane.showMessageDialog(this,
+                            "Código: " + p.getCodigo() +
+                            "\nNombre: " + p.getNombre() +
+                            "\nCategoría: " + p.getCategoria() +
+                            "\nPrecio: " + p.getPrecio() +
+                            "\nStock: " + p.getStock());
+                } else {
+                    JOptionPane.showMessageDialog(this, "Producto no encontrado");
+                }
+
+            } else if (e.getSource() == btnModificar) {
+
+                double precio = Double.parseDouble(txtpre.getText());
+                int stock = Integer.parseInt(txtcant.getText());
+
+                boolean ok = ap.Modificar(
+                        txtnom.getText(),
+                        txtNuevoNombre.getText(),
+                        comboBox.getSelectedItem().toString(),
+                        precio,
+                        stock
+                );
+
+                if (ok)
+                    JOptionPane.showMessageDialog(this, "Modificado correctamente");
+
+            } else if (e.getSource() == btnEliminar) {
+
+                boolean ok = ap.Eliminar(txtnom.getText());
+
+                if (ok)
+                    JOptionPane.showMessageDialog(this, "Eliminado correctamente");
+            }
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Ingrese números válidos en precio y stock");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error inesperado: " + ex.getMessage());
+        }
+    }
 }
+
